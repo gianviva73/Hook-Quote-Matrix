@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hook & Quote Matrix | Digital Creator Lab</title>
+
+    <!-- Meta Tag Social (Open Graph) -->
+    <meta name="description" content="Genera ganci psicologici e citazioni per i tuoi video brevi">
+    <meta property="og:title" content="Hook & Quote Matrix | Digital Creator Lab">
+    <meta property="og:description" content="Genera ganci psicologici e citazioni per i tuoi video brevi">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --accent-color: #10b981; /* Verde brillante */
+            --accent-hover: #059669;
+            --card-bg: #f9fafb;
+            --border-color: #e5e7eb;
+            --secondary-text: #4b5563;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 650px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        p.subtitle {
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+        }
+
+        .cta-banner {
+            background-color: #ecfdf5;
+            border: 1px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .cta-banner a {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #fff;
+            color: var(--text-color);
+            outline: none;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: var(--accent-color);
+        }
+
+        .btn-main {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            flex: 2;
+            text-align: center;
+        }
+
+        .btn-main:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-guide {
+            background-color: #ffffff;
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-guide:hover {
+            background-color: #f3f4f6;
+            border-color: var(--accent-color);
+        }
+
+        .output-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .tag {
+            align-self: flex-start;
+            background: #111;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .hook-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--text-color);
+        }
+
+        .quote-body {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--secondary-text);
+            font-style: italic;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 12px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background: #f3f4f6;
+        }
+
+        .saved-section {
+            margin-top: 15px;
+        }
+
+        .saved-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .saved-section h2 {
+            font-size: 1.1rem;
+        }
+
+        .btn-clear-all {
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .saved-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .saved-item {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-del {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            padding-left: 10px;
+        }
+
+        /* Modal Guida Utente */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 12px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--secondary-text);
+        }
+
+        .guide-step {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .guide-step h4 {
+            font-size: 0.95rem;
+            color: var(--accent-hover);
+        }
+
+        .guide-step p {
+            font-size: 0.88rem;
+            color: var(--secondary-text);
+            line-height: 1.4;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--secondary-text);
+            padding: 15px 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Hook & Quote Matrix</h1>
+        <p class="subtitle">Generatore di frasi e ganci psicologici per Creator & Mindset</p>
+    </header>
+
+    <div class="cta-banner">
+        📢 Unisciti al nostro <a href="https://whatsapp.com/channel/0029Vb8tqXaB4hdRxxjPkp3C" target="_blank">Canale WhatsApp Ufficiale</a> per altre risorse ed app gratuite!
+    </div>
+
+    <div class="controls">
+        <label for="category">Scegli una Categoria:</label>
+        <select id="category" onchange="resetLastIndex()">
+            <option value="psicologia">🧠 Psicologia & Comportamento</option>
+            <option value="motivazione">⚡ Motivazione & Disciplina</option>
+            <option value="successo">🎯 Mindset & Successo</option>
+            <option value="relazioni">💬 Relazioni & Comunicazione</option>
+        </select>
+        <div class="btn-group">
+            <button class="btn-main" onclick="generateHook()">Genera Nuova Idea 🚀</button>
+            <button class="btn-guide" onclick="openGuide()">📖 Guida Utente</button>
+        </div>
+    </div>
+
+    <div class="output-card" id="outputCard">
+        <span class="tag" id="cardTag">Psicologia</span>
+        <div class="hook-title" id="cardHook">"Il 90% delle persone cade in questo errore psicologico senza saperlo..."</div>
+        <div class="quote-body" id="cardQuote">"Non vediamo le cose come sono, le vediamo come siamo."</div>
+        <div class="card-actions">
+            <button class="btn-action" id="btnCopy" onclick="copyToClipboard()">📋 Copia Testo</button>
+            <button class="btn-action" id="btnSave" onclick="saveFavorite()">⭐ Salva nei Preferiti</button>
+        </div>
+    </div>
+
+    <div class="saved-section">
+        <div class="saved-header">
+            <h2>Le tue frasi salvate</h2>
+            <button class="btn-clear-all" id="btnClearAll" onclick="clearAllFavorites()" style="display: none;">Svuota tutte</button>
+        </div>
+        <ul class="saved-list" id="savedList"></ul>
+    </div>
+
+    <div class="cta-banner" style="background-color: #f0fdf4; border-color: #34d399; margin-top: 10px;">
+        💡 Vuoi suggerire nuove frasi o ricevere altri template esclusivi? Entra nel <a href="https://whatsapp.com/channel/0029Vb8tqXaB4hdRxxjPkp3C" target="_blank">Canale WhatsApp di Digital Creator Lab</a>!
+    </div>
+
+    <footer>
+        Powered by Digital Creator Lab &bull; PrimeVerseDigital
+    </footer>
+</div>
+
+<!-- Modal Guida Utente -->
+<div class="modal-overlay" id="guideModal" onclick="closeGuideOnOverlay(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>📖 Guida Utente & Strategia Virale</h3>
+            <button class="btn-close" onclick="closeGuide()">&times;</button>
+        </div>
+        
+        <div class="guide-step">
+            <h4>1. Selezione del Target</h4>
+            <p>Scegli la categoria che meglio si adatta al tema del tuo Short, Reel o post social dal menu a tendina.</p>
+        </div>
+
+        <div class="guide-step">
+            <h4>2. Generazione dell'Hook</h4>
+            <p>Clicca su "Genera Nuova Idea 🚀". L'app estrarrà un gancio (Hook) da dire o mostrare nei primi 3 secondi del video per bloccare lo scorrimento degli utenti (pattern interrupt).</p>
+        </div>
+
+        <div class="guide-step">
+            <h4>3. Integrazione nel Video o Post</h4>
+            <p>Usa l'Hook come testo a schermo o prima frase parlata nel video. La Citazione abbinata serve come spiegazione profonda nel corpo del video o nella didascalia (caption).</p>
+        </div>
+
+        <div class="guide-step">
+            <h4>4. Copia Rapida e Salva</h4>
+            <p>Usa il tasto <strong>"📋 Copia Testo"</strong> per incollare la combinazione direttamente nei tuoi appunti. Clicca su <strong>"⭐ Salva nei Preferiti"</strong> per conservare le idee migliori nella memoria locale del tuo browser senza rischiare di perderle.</p>
+        </div>
+
+        <button class="btn-main" style="margin-top: 10px;" onclick="closeGuide()">Capito, iniziamo! 🔥</button>
+    </div>
+</div>
+
+<script>
+    const database = {
+        psicologia: [
+            { hook: "Il 90% delle persone cade in questo errore psicologico senza saperlo...", quote: "Non vediamo le cose come sono, le vediamo come siamo." },
+            { hook: "Ecco perché il tuo cervello ti spinge a procrastinare le cose importanti:", quote: "La mente cerca sempre la certezza immediata, anche a costo di sacrificare il futuro." },
+            { hook: "Tre segnali psicologici che indicano che stai crescendo mentalmente:", quote: "La maturità comincia quando smetti di spiegare te stesso a chi non vuole capirti." },
+            { hook: "La regola dei 5 secondi che cambia la tua risposta allo stress:", quote: "Tra lo stimolo e la risposta c'è uno spazio. In quello spazio sta il nostro potere di scegliere." },
+            { hook: "Attento a questo schema mentale: se fai sempre così, non cambierai mai.", quote: "Follia è fare sempre la stessa cosa aspettandosi risultati diversi." },
+            { hook: "Il motivo nascosto per cui ti senti sempre stanco mentalmente (non è il lavoro).", quote: "Non è il carico che ti spezza, è il modo in cui lo porti." },
+            { hook: "Come manipolano la tua attenzione senza che tu te ne accorga:", quote: "Chi controlla le tue emozioni controlla le tue decisioni." },
+            { hook: "Se continui a rimuginare sul passato, la tua mente sta facendo questo:", quote: "Chi vive nel passato soffre di depressione; chi vive nel futuro soffre di ansia." },
+            { hook: "Il trucco psicologico per smettere di dare importanza al giudizio degli altri:", quote: "Preoccupati di ciò che gli altri pensano di te e sarai sempre loro prigioniero." },
+            { hook: "Perché il cervello umano odia il cambiamento e preferisce la sofferenza nota?", quote: "La mente preferisce una certezza infelice a un'incertezza potenzialmente meravigliosa." },
+            { hook: "Questo test psicologico rivela come gestisci réellement la pressione:", quote: "Le difficoltà non creano il carattere, lo rivelano." },
+            { hook: "La trappola del 'lo faccio domani': ecco cosa succede al tuo focus.", quote: "La procrastinazione è il ladro del tempo; catturalo prima che ti rubi la vita." },
+            { hook: "Perché le persone intelligenti tendono a dubitare sempre di se stesse?", quote: "Più impari, più ti rendi conto di quanto non sai." },
+            { hook: "Il meccanismo di difesa che usi ogni volta che hai paura di fallire:", quote: "Il coraggio non è l'assenza di paura, ma il trionfo su di essa." }
+        ],
+        motivazione: [
+            { hook: "Smetti di aspettare la motivazione, applica questa regola da domani:", quote: "La disciplina è fare ciò che ami fare anche quando non ne hai alcuna voglia." },
+            { hook: "Se ti senti bloccato oggi, ricordati soltanto di questa cosa:", quote: "Non devi vedere tutta la scalinata, devi solo salire il primo gradino." },
+            { hook: "La differenza tra chi molla e chi ce la fa sta in questa singola scelta:", quote: "Il dolore del rimpianto pesa tonnellate, il dolore della disciplina pesa grammi." },
+            { hook: "Se vuoi risultati straordinari, devi smettere di fare scelte ordinarie.", quote: "Non puoi raggiungere una vita straordinaria mantenendo abitudini mediocri." },
+            { hook: "Il momento migliore per iniziare era un anno fa. Il secondo momento migliore è ORA.", quote: "L'azione è l'antidoto fondamentale alla disperazione." },
+            { hook: "Quando tutto sembra remare contro, ricorda perché hai iniziato.", quote: "Chi ha un perché abbastanza forte può superare qualsiasi come." },
+            { hook: "La fatica di oggi è il trofeo di domani: non fermarti proprio ora.", quote: "Ogni sforzo compiuto in silenzio troverà il suo successo pubblico." },
+            { hook: "Se non lotti per ciò che desideri, non lamentarti di non averlo.", quote: "Il successo non si trova, si costruisce giorno dopo giorno." },
+            { hook: "Meno scuse, più azione: ecco come sbloccare la tua energia.", quote: "Il modo per iniziare è smettere di parlare e iniziare a fare." },
+            { hook: "Nessuno è mai diventato forte stando nella zona di comfort.", quote: "La nave è più sicura nel porto, ma non è per questo che le navi sono state costruite." },
+            { hook: "Il fallimento non è la fine, è solo l'inizio di un'esperienza migliore.", quote: "Ho fallito migliaia di volte nella mia vita e questo è il motivo per cui ho successo." },
+            { hook: "Se vuoi cambiare la tua vita, devi prima cambiare le tue abitudini.", quote: "Le tue abitudini determinano il tuo futuro." },
+            { hook: "Svegliati con determinazione, vai a dormire con soddisfazione.", quote: "Il successo appartiene a chi si alza prima dei dubbi." },
+            { hook: "Non accontentarti del minimo quando hai il potenziale per ottenere il massimo.", quote: "Chi punta alla luna, se fallisce, atterrerà tra le stelle." }
+        ],
+        successo: [
+            { hook: "Il segreto per costruire una routine imbattibile in soli 3 passi:", quote: "Siamo quello che facciamo ripetutamente. L'eccellenza non è un atto, ma un'abitudine." },
+            { hook: "Perché l'ambiente in cui vivi decide il tuo successo finanziario e mentale:", quote: "Sei la media delle cinque persone che frequenti di più." },
+            { hook: "Smetti di cercare la perfezione se vuoi davvero iniziare a fatturare o creare:", quote: "Fatto è meglio che perfetto." },
+            { hook: "La regola d'oro dei milionari per gestire il tempo e il denaro:", quote: "Il tempo è la risorsa più preziosa che possiedi; spendilo con saggezza." },
+            { hook: "Come trasformare ogni fallimento nel trampolino di lancio per il tuo business:", quote: "Il successo è cadere sette volte e rialzarsi otto." },
+            { hook: "Se vuoi crescere nel digitale, devi imparare questa competenza chiave:", quote: "La costanza batte il talento quando il talento non è costante." },
+            { hook: "L'errore numero uno che blocca la crescita dei creator e degli imprenditori:", quote: "Chi cerca di accontentare tutti finisce per non accontentare nessuno." },
+            { hook: "Il metodo definitivo per pianificare obiettivi che non rimarranno solo sogni:", quote: "Un obiettivo senza un piano è solo un desiderio." },
+            { hook: "Perché la velocità di esecuzione conta più di un'idea perfetta?", quote: "Le idee valgono zero senza un'esecuzione impeccabile." },
+            { hook: "Costruisci il tuo futuro oggi: nessuno lo farà al posto tuo.", quote: "La migliore previsione del futuro è crearlo." },
+            { hook: "Investire su se stessi è l'unico investimento che non perde mai valore.", quote: "La conoscenza parla, ma la saggezza ascolta e agisce." },
+            { hook: "Come mantenere alta la concentrazione in un mondo pieno di distrazioni:", quote: "La concentrazione è dire di no a centinaia di buone idee." },
+            { hook: "Il mindset vincente per affrontare la concorrenza senza timore:", quote: "Non competere con gli altri, competi con la versione di te stesso di ieri." },
+            { hook: "La strategia silenziosa dietro ogni grande brand di successo:", quote: "Focalizzati sul dare valore reale e il guadagno sarà una conseguenza naturale." }
+        ],
+        relazioni: [
+            { hook: "Come capire se una persona ti sta ascoltando davvero o sta solo aspettando di parlare:", quote: "La maggior parte delle persone non ascolta con l'intento di capire, ma con l'intento di rispondere." },
+            { hook: "La parola più potente in psicologia per disinnescare una discussione:", quote: "L'empatia è la capacità di vedere il mondo attraverso gli occhi dell'altro senza giudicare." },
+            { hook: "Tre regole per comunicare in modo persuasivo ed evitare malintesi:", quote: "La chiarezza è la cortesia principale di chi comunica." },
+            { hook: "Perché alcune persone drenano la tua energia e come proteggerti:", quote: "Impara a dire di no senza sentirti in colpa; la tua energia è limitata." },
+            { hook: "Il segreto per costruire legami autentici e duraturi nel tempo:", quote: "L'amore e l'amicizia non si chiedono, si dimostrano con la presenza." },
+            { hook: "Come gestire un conflitto senza ferire chi hai di fronte:", quote: "Attacca il problema, non la persona." },
+            { hook: "Il linguaggio del corpo non mente: ecco cosa dicono i suoi gesti.", quote: "Le parole possono mentire, ma le azioni e i gesti dicono sempre la verità." },
+            { hook: "Perché l'ascolto attivo è lo strumento più potente nelle relazioni umane?", quote: "Nessuno ti ricorderà per quello che hai detto, ma per come lo hai fatto sentire." },
+            { hook: "Come riconoscere chi ti sta accanto per interesse e chi per affetto reale:", quote: "Nelle difficoltà si riconoscono i veri amici." },
+            { hook: "Il peso delle parole: feriscono più di una spada se usate male.", quote: "Prima di parlare, assicurati che le tue parole siano migliori del silenzio." },
+            { hook: "Come ristabilire confini sani con chi tende a superare il limite:", quote: "Tu insegnano agli altri come trattarti attraverso ciò che permetti." },
+            { hook: "La gentilezza disarma chiunque: perché dovresti usarla ogni giorno.", quote: "La gentilezza in parole crea fiducia; la gentilezza nel pensiero crea profondità." },
+            { hook: "Saper perdonare non significa dimenticare, significa liberare se stessi.", quote: "Portare rancore è come bere veleno aspettandosi che muoia l'altra persona." },
+            { hook: "Il valore di un abbraccio sincero quando le parole non servono più:", quote: "A volte un abbraccio vale più di mille discorsi." }
+        ]
+    };
+
+    let currentItem = null;
+    let lastIndex = -1;
+
+    function resetLastIndex() {
+        lastIndex = -1;
+    }
+
+    function generateHook() {
+        const cat = document.getElementById('category').value;
+        const list = database[cat];
+        let randomIndex;
+
+        if (list.length > 1) {
+            do {
+                randomIndex = Math.floor(Math.random() * list.length);
+            } while (randomIndex === lastIndex);
+        } else {
+            randomIndex = 0;
+        }
+
+        lastIndex = randomIndex;
+        currentItem = list[randomIndex];
+
+        document.getElementById('cardTag').innerText = cat;
+        document.getElementById('cardHook').innerText = `"${currentItem.hook}"`;
+        document.getElementById('cardQuote').innerText = `"${currentItem.quote}"`;
+
+        updateSaveButtonState();
+    }
+
+    function copyToClipboard() {
+        if (!currentItem) return;
+        const textToCopy = `HOOK: ${currentItem.hook}\nCITAZIONE: ${currentItem.quote}`;
+
+        const triggerFeedback = () => {
+            const btn = document.getElementById('btnCopy');
+            btn.innerHTML = "Copiato! ✓";
+            btn.style.backgroundColor = "#ecfdf5";
+            btn.style.borderColor = "#10b981";
+            btn.style.color = "#059669";
+
+            setTimeout(() => {
+                btn.innerHTML = "📋 Copia Testo";
+                btn.style.backgroundColor = "#fff";
+                btn.style.borderColor = "var(--border-color)";
+                btn.style.color = "var(--text-color)";
+            }, 2000);
+        };
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(textToCopy)
+                .then(triggerFeedback)
+                .catch(() => fallbackCopy(textToCopy, triggerFeedback));
+        } else {
+            fallbackCopy(textToCopy, triggerFeedback);
+        }
+    }
+
+    function fallbackCopy(text, callback) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            if (callback) callback();
+        } catch (err) {
+            console.error("Fallback copia fallito", err);
+        }
+        document.body.removeChild(textArea);
+    }
+
+    function isAlreadySaved(item) {
+        let favorites = JSON.parse(localStorage.getItem('favHooks') || '[]');
+        return favorites.some(fav => fav.hook === item.hook && fav.quote === item.quote);
+    }
+
+    function updateSaveButtonState() {
+        const btn = document.getElementById('btnSave');
+        if (!currentItem) return;
+        
+        if (isAlreadySaved(currentItem)) {
+            btn.innerHTML = "⭐ Già salvato!";
+            btn.style.backgroundColor = "#f3f4f6";
+            btn.style.color = "#6b7280";
+        } else {
+            btn.innerHTML = "⭐ Salva nei Preferiti";
+            btn.style.backgroundColor = "#fff";
+            btn.style.color = "var(--text-color)";
+        }
+    }
+
+    function saveFavorite() {
+        if (!currentItem) return;
+        let favorites = JSON.parse(localStorage.getItem('favHooks') || '[]');
+        
+        if (!isAlreadySaved(currentItem)) {
+            favorites.push(currentItem);
+            localStorage.setItem('favHooks', JSON.stringify(favorites));
+            renderFavorites();
+            updateSaveButtonState();
+        } else {
+            const btn = document.getElementById('btnSave');
+            btn.innerHTML = "⭐ Già presente!";
+            setTimeout(() => {
+                updateSaveButtonState();
+            }, 1500);
+        }
+    }
+
+    function removeFavorite(index) {
+        let favorites = JSON.parse(localStorage.getItem('favHooks') || '[]');
+        favorites.splice(index, 1);
+        localStorage.setItem('favHooks', JSON.stringify(favorites));
+        renderFavorites();
+        updateSaveButtonState();
+    }
+
+    function clearAllFavorites() {
+        if (confirm("Sei sicuro di voler cancellare tutte le frasi salvate nei preferiti?")) {
+            localStorage.removeItem('favHooks');
+            renderFavorites();
+            updateSaveButtonState();
+        }
+    }
+
+    function renderFavorites() {
+        const listEl = document.getElementById('savedList');
+        const clearBtn = document.getElementById('btnClearAll');
+        listEl.innerHTML = '';
+        let favorites = JSON.parse(localStorage.getItem('favHooks') || '[]');
+        
+        if (favorites.length === 0) {
+            listEl.innerHTML = `<li class="saved-item" style="color: var(--secondary-text); justify-content: center; font-style: italic;">Nessuna frase salvata al momento.</li>`;
+            clearBtn.style.display = 'none';
+            return;
+        }
+
+        clearBtn.style.display = 'inline-block';
+
+        favorites.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.className = 'saved-item';
+            li.innerHTML = `
+                <div>
+                    <strong>${item.hook}</strong><br>
+                    <small style="color:#666">${item.quote}</small>
+                </div>
+                <button class="btn-del" onclick="removeFavorite(${index})" title="Rimuovi">&times;</button>
+            `;
+            listEl.appendChild(li);
+        });
+    }
+
+    /* Gestione Guida Utente Modal */
+    function openGuide() {
+        document.getElementById('guideModal').style.display = 'flex';
+    }
+
+    function closeGuide() {
+        document.getElementById('guideModal').style.display = 'none';
+    }
+
+    function closeGuideOnOverlay(event) {
+        if (event.target.id === 'guideModal') {
+            closeGuide();
+        }
+    }
+
+    // Inizializza all'avvio
+    generateHook();
+    renderFavorites();
+</script>
+</body>
+</html>
